@@ -5,7 +5,9 @@ import (
 	"fmt"
 	"io"
 
+	"github.com/vshalt/arbok/evaluator"
 	"github.com/vshalt/arbok/lexer"
+	"github.com/vshalt/arbok/object"
 	"github.com/vshalt/arbok/parser"
 )
 
@@ -14,6 +16,7 @@ const PROMPT = `Hello, welcome to arbok!
 
 func Start(in io.Reader, out io.Writer) {
 	scanner := bufio.NewScanner(in)
+	env := object.NewEnvironment()
 	fmt.Printf(PROMPT)
 	for {
 		scanned := scanner.Scan()
@@ -33,8 +36,11 @@ func Start(in io.Reader, out io.Writer) {
 			continue
 		}
 
-		io.WriteString(out, program.String())
-		io.WriteString(out, "\n")
+		evaluated := evaluator.Eval(program, env)
+		if evaluated != nil {
+			io.WriteString(out, evaluated.Inspect())
+			io.WriteString(out, "\n>> ")
+		}
 	}
 }
 
