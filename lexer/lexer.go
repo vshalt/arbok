@@ -103,6 +103,15 @@ func (l *Lexer) NextToken() token.Token {
 		tok = newToken(token.COMMA, string(l.ch))
 	case ';':
 		tok = newToken(token.SEMICOLON, string(l.ch))
+	case ':':
+		tok = newToken(token.COLON, string(l.ch))
+	case '"':
+		tok.Type = token.STRING
+		tok.Literal = l.readString()
+	case '[':
+		tok = newToken(token.LBRACKET, string(l.ch))
+	case ']':
+		tok = newToken(token.RBRACKET, string(l.ch))
 	case 0:
 		tok.Type = token.EOF
 		tok.Literal = ""
@@ -127,6 +136,17 @@ func (l *Lexer) skipWhiteSpace() {
 	for l.ch == ' ' || l.ch == '\n' || l.ch == '\t' || l.ch == '\r' {
 		l.readChar()
 	}
+}
+
+func (l *Lexer) readString() string {
+	position := l.position + 1
+	for {
+		l.readChar()
+		if l.ch == '"' || l.ch == 0 {
+			break
+		}
+	}
+	return l.input[position:l.position]
 }
 
 func newToken(tokenType token.TokenType, literal string) token.Token {

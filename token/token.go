@@ -18,10 +18,13 @@ const (
 	LESS_THAN    = "<"
 	COMMA        = ","
 	SEMICOLON    = ";"
+	COLON        = ":"
 	LPAREN       = "("
 	RPAREN       = ")"
 	LBRACE       = "{"
 	RBRACE       = "}"
+	LBRACKET     = "["
+	RBRACKET     = "]"
 
 	EQUAL     = "=="
 	NOT_EQUAL = "!="
@@ -35,6 +38,7 @@ const (
 	FALSE      = "FALSE"
 	INTEGER    = "INTEGER"
 	IDENTIFIER = "IDENTIFIER"
+	STRING     = "STRING"
 
 	ILLEGAL = "ILLEGAL"
 	EOF     = "EOF"

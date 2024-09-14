@@ -25,6 +25,10 @@ if (5 < 10) {
 }
 10 == 10;
 10 != 5;
+"foobar";
+"foo bar";
+[1, 2];
+{"foo": "bar"};
 `
 	tests := []struct {
 		expectedType    token.TokenType
@@ -111,6 +115,26 @@ if (5 < 10) {
 		{token.INTEGER, "10"},
 		{token.NOT_EQUAL, "!="},
 		{token.INTEGER, "5"},
+		{token.SEMICOLON, ";"},
+
+		{token.STRING, "foobar"},
+		{token.SEMICOLON, ";"},
+
+		{token.STRING, "foo bar"},
+		{token.SEMICOLON, ";"},
+
+		{token.LBRACKET, "["},
+		{token.INTEGER, "1"},
+		{token.COMMA, ","},
+		{token.INTEGER, "2"},
+		{token.RBRACKET, "]"},
+		{token.SEMICOLON, ";"},
+
+		{token.LBRACE, "{"},
+		{token.STRING, "foo"},
+		{token.COLON, ":"},
+		{token.STRING, "bar"},
+		{token.RBRACE, "}"},
 		{token.SEMICOLON, ";"},
 
 		{token.EOF, ""},
